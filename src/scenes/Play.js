@@ -63,7 +63,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scorLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
 
     }
 
@@ -113,5 +113,8 @@ class Play extends Phaser.Scene {
             ship.alpha = 1;                     //make ship visible again
             boom.destroy();                     //remove explosion sprite
         });
+        // score add and repaint
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
     }
 }
