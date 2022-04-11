@@ -64,6 +64,9 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+        
+        // GAME OVER FLAG
+        this.gameOver = false;
 
         // 60-second play clock
         scoreConfig.fixedWidth = 0;
@@ -72,16 +75,19 @@ class Play extends Phaser.Scene {
             scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart',
             scoreConfig).setOrigin(0.5);
+            this.gameOver = true;
         }, null, this);
     }
 
     update() {
         this.starfield.tilePositionX -= 4;
-        this.p1Rocket.update();
-        this.ship01.update();           //update spaceships (x3)
-        this.ship02.update();
-        this.ship03.update();
-
+        if(!this.gameOver){
+            this.p1Rocket.update();
+            this.ship01.update();           //update spaceships (x3)
+            this.ship02.update();
+            this.ship03.update();
+        }
+        
         // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship03)){
             this.p1Rocket.reset();
